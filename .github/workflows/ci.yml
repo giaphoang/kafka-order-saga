@@ -1,0 +1,26 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - name: Unit tests
+        run: mvn -B test
+      - name: Shell scripts syntax check
+        run: bash -n scripts/*.sh
+      - name: ShellCheck
+        run: shellcheck scripts/*.sh || echo "shellcheck not available or reported issues (non-blocking)"
+      - name: Perl reconciliation script syntax check
+        run: perl -c scripts/reconcile.pl
+      - name: Avro schema validation
+        run: scripts/check-schema-compatibility.sh
