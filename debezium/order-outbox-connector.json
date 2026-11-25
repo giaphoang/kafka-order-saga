@@ -1,0 +1,17 @@
+{
+  "name": "order-outbox-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "tasks.max": "1",
+    "database.hostname": "postgres",
+    "database.port": "5432",
+    "database.user": "commerce",
+    "database.password": "commerce",
+    "database.dbname": "commerce",
+    "topic.prefix": "commerce",
+    "plugin.name": "pgoutput",
+    "slot.name": "debezium_outbox",
+    "table.include.list": "orders.outbox_event",
+    "tombstones.on.delete": "false"
+  }
+}

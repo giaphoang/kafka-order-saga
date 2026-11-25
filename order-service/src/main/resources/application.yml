@@ -7,8 +7,12 @@ spring:
     username: commerce
     password: commerce
   jpa:
-    hibernate.ddl-auto: update
+    hibernate.ddl-auto: validate
     properties.hibernate.default_schema: orders
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     consumer:
@@ -21,3 +25,11 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 management.endpoints.web.exposure.include: health,info,metrics,prometheus
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:dev-only-secret-please-change-in-production}
+    ttl-seconds: 3600
+  demo:
+    username: ${DEMO_USERNAME:demo}
+    password: ${DEMO_PASSWORD:demo-password}

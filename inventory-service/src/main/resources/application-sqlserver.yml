@@ -1,0 +1,20 @@
+# SQL Server profile:  --spring.profiles.active=sqlserver
+# PostgreSQL remains the default; this profile only swaps the datasource/driver.
+# Flyway migrations in db/migration are PostgreSQL dialect, so Flyway is disabled
+# here and Hibernate creates/validates against SQL Server directly (demo scope).
+# Schemas are not used on SQL Server in this profile (dbo is used instead).
+spring:
+  datasource:
+    url: jdbc:sqlserver://${MSSQL_HOST:localhost}:1433;databaseName=commerce;encrypt=true;trustServerCertificate=true
+    username: ${MSSQL_USER:sa}
+    password: ${MSSQL_PASSWORD:Commerce_Strong1}
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_schema: dbo
+        dialect: org.hibernate.dialect.SQLServerDialect
+  flyway:
+    enabled: false

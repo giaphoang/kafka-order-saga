@@ -1,0 +1,12 @@
+# Avro / Schema Registry override (governance only; runtime stays JSON).
+# Usage: docker compose -f docker-compose.yml -f docker-compose.avro.yml up -d schema-registry
+services:
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.6.1
+    hostname: schema-registry
+    ports: ["8085:8081"]
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: "PLAINTEXT://kafka:29092"
+      SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
+    depends_on: [kafka]

@@ -1,0 +1,17 @@
+# SQL Server override: adds Microsoft SQL Server for the `sqlserver` Spring profile.
+# Usage: docker compose -f docker-compose.yml -f docker-compose.sqlserver.yml up -d mssql
+# The JPA services are run on the host with --spring.profiles.active=sqlserver.
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    hostname: mssql
+    ports: ["1433:1433"]
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Commerce_Strong1"
+      MSSQL_PID: "Developer"
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P Commerce_Strong1 -C -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12

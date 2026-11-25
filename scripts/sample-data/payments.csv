@@ -1,0 +1,5 @@
+payment_id,order_id,amount,approved,transaction_id
+aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa,11111111-1111-1111-1111-111111111111,1299.00,true,PAY-1
+bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb,22222222-2222-2222-2222-222222222222,200.00,true,PAY-2
+cccccccc-cccc-cccc-cccc-cccccccccccc,44444444-4444-4444-4444-444444444444,90.00,true,PAY-3
+dddddddd-dddd-dddd-dddd-dddddddddddd,99999999-9999-9999-9999-999999999999,10.00,true,PAY-4

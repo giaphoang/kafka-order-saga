@@ -1,0 +1,22 @@
+# Debezium CDC override: streams the orders outbox table instead of polling.
+# Usage: docker compose -f docker-compose.yml -f docker-compose.cdc.yml up -d connect postgres
+# Then register the connector:
+#   curl -X POST -H 'Content-Type: application/json' --data @debezium/order-outbox-connector.json http://localhost:8089/connectors
+# NOTE: PostgreSQL needs wal_level=logical for the pgoutput plugin (set below for the postgres service).
+services:
+  postgres:
+    command: ["postgres", "-c", "wal_level=logical"]
+  connect:
+    image: debezium/connect:2.7
+    hostname: connect
+    ports: ["8089:8083"]
+    environment:
+      BOOTSTRAP_SERVERS: kafka:29092
+      GROUP_ID: commerce-connect-cluster
+      CONFIG_STORAGE_TOPIC: connect_configs
+      OFFSET_STORAGE_TOPIC: connect_offsets
+      STATUS_STORAGE_TOPIC: connect_statuses
+      CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      STATUS_STORAGE_REPLICATION_FACTOR: 1
+    depends_on: [kafka, postgres]

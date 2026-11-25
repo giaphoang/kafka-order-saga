@@ -1,0 +1,70 @@
+{
+  "type": "record",
+  "name": "OrderCreated",
+  "namespace": "dev.kafka.contracts",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "orderId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "customerEmail",
+      "type": "string"
+    },
+    {
+      "name": "items",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "LineItem",
+          "fields": [
+            {
+              "name": "sku",
+              "type": "string"
+            },
+            {
+              "name": "quantity",
+              "type": "int"
+            },
+            {
+              "name": "unitPrice",
+              "type": {
+                "type": "bytes",
+                "logicalType": "decimal",
+                "precision": 19,
+                "scale": 2
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "total",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 19,
+        "scale": 2
+      }
+    },
+    {
+      "name": "occurredAt",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    }
+  ]
+}
