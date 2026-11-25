@@ -23,4 +23,4 @@ jobs:
       - name: Perl reconciliation script syntax check
         run: perl -c scripts/reconcile.pl
       - name: Avro schema validation
-        run: scripts/check-schema-compatibility.sh
+        run: bash scripts/check-schema-compatibility.sh
